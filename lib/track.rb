@@ -4,16 +4,10 @@ class Track
     @artist = artist
   end
 
-  def title
-    return @title
-  end
-
-  def artist
-    return @artist
-  end
+  attr_reader :title, :artist
 
   def matches?(keyword)
     # Returns true if the keyword matches either the title or artist
-    return @title.include?(keyword) || @artist.include?(keyword)
+    @title.include?(keyword) || @artist.include?(keyword)
   end
 end

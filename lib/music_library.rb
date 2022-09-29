@@ -1,6 +1,6 @@
 class MusicLibrary
   def initialize
-    @library = Array.new
+    @library = []
   end
 
   def add(track) # track is an instance of Track
@@ -11,13 +11,12 @@ class MusicLibrary
 
   def all
     # Returns a list of track objects
-    return @library
+    @library
   end
 
   def search(keyword)
-    fail "Keyword must be provided" if keyword == ''
+    raise 'Keyword must be provided' if keyword == ''
 
-    matching_songs = @library.select { |song| song.matches?(keyword) }
-    return matching_songs
+    @library.select { |song| song.matches?(keyword) }
   end
 end
