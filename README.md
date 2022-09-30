@@ -46,3 +46,64 @@ end
 
 - [Test](./spec/)
 - [Code](./lib/)
+
+### Challenge
+
+- [Tests & Code](https://github.com/xab13r/golden-square/tree/main/codebases/mocking_bites)
+
+## Crafting Doubles
+
+These are examples on how to craft `doubles`:
+
+- If you need an object: `double(:fake_object`
+- If you need an object with methods: `double(:fake_object, method_name: <return value>`
+- If you need an object with methods only returning values with given arguments:
+
+```ruby
+# As a class
+class FakeObject
+  def greet(name)
+    fail unless name == "Kay"
+    return "Hello, Kay!"
+  end
+end
+
+# As a double
+fake_object = double(:fake_object)
+allow(fake_object).to receive(:greet).with("Kay").and_return("Hello, Kay!")
+expect(fake_object.greet("Kay")).to eq "Hello, Kay!"
+
+```
+
+- If you need to verify methods are called with given arguments:
+
+```ruby
+# As a class
+class FakeObject
+  def initialize
+    @greet_has_been_called = false
+  end
+
+  def greet(name)
+    fail unless name == "Kay"
+    @greet_has_been_called
+    return "Hello, Kay!"
+  end
+
+  def has_greet_been_called
+    return @greet_has_been_called
+  end
+end
+
+# As a double
+fake_object = double(:fake_object)
+expect(fake_object).to receive(:greet).with("Kay").and_return("Hello, Kay!")
+```
+
+### Exercises
+
+- [Test](./spec/crafting_double_exercise_spec.rb)
+
+### Challenge
+
+
