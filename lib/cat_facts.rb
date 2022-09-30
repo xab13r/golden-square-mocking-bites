@@ -19,6 +19,3 @@ class CatFacts
     JSON.parse(text_response)
   end
 end
-
-fact = CatFacts.new(Net::HTTP)
-p fact.provide

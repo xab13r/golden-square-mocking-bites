@@ -201,4 +201,70 @@ result = activity_suggester.suggest
 expect(result).to eq "Why not: Take your dog on a walk"
 ```
 
+### Exercise
+
+- [Code](./lib/time_error.rb)
+- [Test](./spec/time_error_spec.rb)
+
+### Challenge
+
+- [Code](./lib/cat_facts.rb)
+- [Test](./spec/cat_facts_spec.rb)
+
 ## Unit Testing Terminal IO
+
+Here is a class that is hard to test:
+
+```ruby
+class Greeter
+  def greet
+    puts "What is your name?"
+    name = gets.chomp
+    puts "Hello, #{name}!"
+  end
+end
+```
+
+`puts` doesn't return and `gets` is not the same as passing arguments.
+
+We need to create doubles for `puts` and `gets`.
+
+```ruby
+class Greeter
+  def greet
+    Kernel.puts "What is your name?"
+    name = Kernel.gets.chomp
+    Kernel.puts "Hello, #{name}!"
+  end
+end
+```
+
+`Kernel` is an implicit object in Ruby, but it's always there.
+In reality we only have to create a double for `Kernel`.
+
+```ruby
+class Greeter
+  def initialize(io)
+    @io = io
+  def greet
+    @io.puts "What is your name?"
+    name = @io.gets.chomp
+    @io.puts "Hello, #{name}!"
+  end
+end
+```
+
+Then our test becomes:
+```ruby
+RSpec.describe Greeter do
+  it "greets the user" do
+    io = double(:io)
+    expect(io).to receive(:puts).with("What is your name?")
+    expect(io).to receive(:gets).and_return("Kay")
+    expect(io).to receive(:puts).with("Hello, Kay!")
+
+    greeter = Greeter.new(io)
+    greeter.greet
+  end
+end
+```
