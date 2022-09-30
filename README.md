@@ -106,4 +106,6 @@ expect(fake_object).to receive(:greet).with("Kay").and_return("Hello, Kay!")
 
 ### Challenge
 
+- [Test](./spec/crafting_double_challenge_spec.rb)
+
 
