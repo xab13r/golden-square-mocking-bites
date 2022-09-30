@@ -108,4 +108,55 @@ expect(fake_object).to receive(:greet).with("Kay").and_return("Hello, Kay!")
 
 - [Test](./spec/crafting_double_challenge_spec.rb)
 
+## Unit Testing Peer Classes
 
+### Exercise
+
+Write integration tests and unit test for the following classes:
+
+```ruby
+# File: lib/secret_diary.rb
+
+class SecretDiary
+  def initialize(diary) # diary is an instance of Diary
+    # ...
+  end
+
+  def read
+    # Raises the error "Go away!" if the diary is locked
+    # Returns the diary's contents if the diary is unlocked
+    # The diary starts off locked
+  end
+
+  def lock
+    # Locks the diary
+    # Returns nothing
+  end
+
+  def unlock
+    # Unlocks the diary
+    # Returns nothing
+  end
+end
+```
+
+```ruby
+# File: lib/diary.rb
+
+class Diary
+  def initialize(contents) # contents is a string
+  end
+
+  def read
+    # Returns the contents of the diary
+  end
+end
+```
+
+- Code:
+  - [Diary]()
+  - [SecretDiary]()
+- Tests:
+  - [diary_spec]()
+  - [secret_diary_spec]()
+  - [secret_diary_integration_spec]()
