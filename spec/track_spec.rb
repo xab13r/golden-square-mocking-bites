@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'track'
 
 RSpec.describe Track do

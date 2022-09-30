@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Diary
   def initialize(contents)
-	  @contents = contents
+    @contents = contents
   end
 
   def read
-	return @contents
+    @contents
   end
 end

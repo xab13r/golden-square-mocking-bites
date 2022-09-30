@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 class MusicLibrary
   def initialize
     @library = []
   end
 
-  def add(track) # track is an instance of Track
+  # track is an instance of Track
+  def add(track)
     # Track gets added to the library
     # Returns nothing
     @library.push(track)

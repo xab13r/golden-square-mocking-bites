@@ -154,9 +154,51 @@ end
 ```
 
 - Code:
-  - [Diary]()
-  - [SecretDiary]()
+  - [Diary](./lib/diary.rb)
+  - [SecretDiary](./lib/secret_diary.rb)
 - Tests:
-  - [diary_spec]()
-  - [secret_diary_spec]()
-  - [secret_diary_integration_spec]()
+  - [diary_spec](./spec/diary_spec.rb)
+  - [secret_diary_spec](./spec/secret_diary_spec.rb)
+  - [secret_diary_integration_spec](./spec/secret_diary_integration_spec.rb)
+
+## Unit Testing API Requests
+
+In order to unit test an API we will have to replace `Net::HTTP` with a `double`.
+
+```ruby
+def make_request_to_api
+  text_response = Net::HTTP.get("www.boredapi.com", "/api/activity")
+  return JSON.parse(text_response)
+end
+```
+
+Needs to be changed to:
+
+```ruby
+def make_request_to_api
+  # We use '@requester' rather than 'Net:HTTP'
+  text_response = @requester.get(URI("https://www.boredapi.com/api/activity"))
+  return JSON.parse(text_response)
+end
+```
+
+Then, we will have to pass the `@requester` to the class via the `initialize` method.
+
+```ruby
+def initialize(requester) # requester is usually Net::HTTP
+  @requester = requester
+end
+```
+
+And for RSpec that translates to:
+
+```ruby
+requester_dbl = double :requester
+expect(requester_dbl).to receive(:get).with(URI(<API anchor>)).and_return(<API response>)
+
+activity_suggester = ActivitySuggester.new(requester_dbl)
+result = activity_suggester.suggest
+expect(result).to eq "Why not: Take your dog on a walk"
+```
+
+## Unit Testing Terminal IO
