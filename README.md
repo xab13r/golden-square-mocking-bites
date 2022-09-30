@@ -268,3 +268,13 @@ RSpec.describe Greeter do
   end
 end
 ```
+
+### Exercise
+
+- [Code](./lib/interactive_calculator.rb)
+- [Test](./spec/interactive_calculator_spec.rb)
+
+### Challenge
+
+- [Code](./lib/string_repeater.rb)
+- [Test](./spec/string_repeater_spec.rb)
